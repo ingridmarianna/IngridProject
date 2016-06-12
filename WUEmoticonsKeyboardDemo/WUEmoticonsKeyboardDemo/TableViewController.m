@@ -123,7 +123,7 @@
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
-                [self performSegueWithIdentifier:@"seguePushDemoVC111" sender:self];
+                [self performSegueWithIdentifier:@"seguePushDemoVC" sender:self];
                 break;
             case 1:
             {
@@ -174,7 +174,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"segueModalDemoVC111"]) {
+    if ([segue.identifier isEqualToString:@"segueModalDemoVC"]) {
         UINavigationController *nc = segue.destinationViewController;
         TestChatViewController *vc = (TestChatViewController *)nc.topViewController;
         vc.delegateModal = self;
