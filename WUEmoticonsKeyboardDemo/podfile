@@ -1,0 +1,4 @@
+platform :ios, ‘7.0’
+pod 'JSQMessagesViewController'
+pod 'FGTranslator'
+pod 'FLAnimatedImage', '~> 1.0'
