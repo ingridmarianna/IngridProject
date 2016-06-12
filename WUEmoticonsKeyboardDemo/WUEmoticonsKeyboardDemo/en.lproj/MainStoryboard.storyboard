@@ -489,7 +489,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="dVk-xq-5og" kind="modal" identifier="seguePushDemoVC" id="VJf-2J-Puw"/>
+                                    <segue destination="dVk-xq-5og" kind="modal" identifier="123" id="VJf-2J-Puw"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -574,9 +574,6 @@
                                                 <constraint firstItem="DxR-2s-2wU" firstAttribute="top" secondItem="NdX-IR-Ixu" secondAttribute="bottom" constant="9" id="oin-xq-6Zd"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="2" kind="push" identifier="seguePushDemoVC" id="Uvj-gG-aLb"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -965,7 +962,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UE9-lO-sIP" userLabel="Conversation_View">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UE9-lO-sIP" userLabel="Conversation_View">
                                 <rect key="frame" x="138" y="268" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
