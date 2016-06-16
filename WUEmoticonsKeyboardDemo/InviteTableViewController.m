@@ -34,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+     //self.navigationController.navigationBar.hidden = YES;
     userEmail = @"someone@hotmail.com";
     inviteMesaage = @"Hello! Nice to meet you. Please contact me.";
     inviteEmail = @[@"Hideki222@outlook.com"];

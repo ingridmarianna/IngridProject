@@ -15,6 +15,4 @@
     MFMailComposeViewController *mailComposer;
 }
 
-@property (weak, nonatomic) IBOutlet UIButton *InviteBtn;
-
 @end

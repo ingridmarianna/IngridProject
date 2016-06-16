@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignUpViewController : UIViewController
+@interface SignUpViewController : UIViewController<UINavigationControllerDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate>
+
 
 @property (weak, nonatomic) IBOutlet UITextField *txtUserName;
 
@@ -19,5 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtUserPassword;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnSignUp;
+
+@property (weak, nonatomic) IBOutlet UIImageView *UserImage;
+
 
 @end

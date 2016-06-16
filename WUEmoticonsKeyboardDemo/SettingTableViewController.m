@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.hidden = YES;
     //[self.navigationController.navigationBar setTranslucent:NO];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -36,12 +37,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+//#warning Incomplete implementation, return the number of sections
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+//#warning Incomplete implementation, return the number of rows
     return 0;
 }
 

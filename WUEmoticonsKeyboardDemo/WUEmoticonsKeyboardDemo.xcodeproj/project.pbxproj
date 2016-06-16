@@ -132,7 +132,6 @@
 		C007A4631D0C49E700088DAB /* DemoModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = C007A4621D0C49E700088DAB /* DemoModelData.m */; };
 		C007A4661D0C4A2600088DAB /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C007A4651D0C4A2600088DAB /* TableViewController.m */; };
 		C007A4691D0C4A5B00088DAB /* TestChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C007A4681D0C4A5B00088DAB /* TestChatViewController.m */; };
-		C007A46C1D0C4E4B00088DAB /* WUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C007A46B1D0C4E4B00088DAB /* WUViewController.m */; };
 		C007A46E1D0C840F00088DAB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C007A46D1D0C840F00088DAB /* Images.xcassets */; };
 		E9065FF91CE38EC300D54630 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9065FF81CE38EC300D54630 /* LoginViewController.m */; };
 		E97F2CDB1CFBE8A9008826F8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97F2CDA1CFBE8A9008826F8 /* Storyboard.storyboard */; };
@@ -304,8 +303,6 @@
 		C007A4651D0C4A2600088DAB /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		C007A4671D0C4A5B00088DAB /* TestChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestChatViewController.h; sourceTree = "<group>"; };
 		C007A4681D0C4A5B00088DAB /* TestChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestChatViewController.m; sourceTree = "<group>"; };
-		C007A46A1D0C4E4B00088DAB /* WUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUViewController.h; sourceTree = "<group>"; };
-		C007A46B1D0C4E4B00088DAB /* WUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUViewController.m; sourceTree = "<group>"; };
 		C007A46D1D0C840F00088DAB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E9065FF71CE38EC300D54630 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E9065FF81CE38EC300D54630 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -617,8 +614,6 @@
 				C007A4651D0C4A2600088DAB /* TableViewController.m */,
 				C007A4671D0C4A5B00088DAB /* TestChatViewController.h */,
 				C007A4681D0C4A5B00088DAB /* TestChatViewController.m */,
-				C007A46A1D0C4E4B00088DAB /* WUViewController.h */,
-				C007A46B1D0C4E4B00088DAB /* WUViewController.m */,
 			);
 			path = WUEmoticonsKeyboardDemo;
 			sourceTree = "<group>";
@@ -967,7 +962,6 @@
 				526D01A61CCCF9FC00D18CBA /* SignUpViewController.m in Sources */,
 				526D01D61CCD001D00D18CBA /* InviteTableViewCell.m in Sources */,
 				5212736A1CB218DA000E317B /* SVIndefiniteAnimatedView.m in Sources */,
-				C007A46C1D0C4E4B00088DAB /* WUViewController.m in Sources */,
 				9D8519BD179AD0F2009542D9 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
 				E9065FF91CE38EC300D54630 /* LoginViewController.m in Sources */,
 				526D01B11CCCFDCE00D18CBA /* ContactsTableViewCell.m in Sources */,

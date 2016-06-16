@@ -18,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"JSQMessagesViewController";
+    self.title = @"Person Name";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -39,12 +39,12 @@
     switch (section) {
         case 0:
             return 2;
-        case 1:
-            return 2;
-        case 2:
-            return 1;
-        case 3:
-            return 1;
+//        case 1:
+//            return 2;
+//        case 2:
+//            return 1;
+//        case 3:
+//            return 1;
         default:
             return 0;
     }
@@ -69,30 +69,30 @@
                 break;
         }
     }
-    else if (indexPath.section == 1) {
-        switch (indexPath.row) {
-            case 0:
-                cell.textLabel.text = @"Modal via storyboard";
-                break;
-            case 1:
-                cell.textLabel.text = @"Modal programmatically";
-                break;
-        }
-    }
-    else if (indexPath.section == 2) {
-        switch (indexPath.row) {
-            case 0:
-                cell.textLabel.text = @"Settings";
-                break;
-        }
-    }
-    else if (indexPath.section == 3) {
-        switch (indexPath.row) {
-            case 0:
-                cell.textLabel.text = @"Push view 2 levels";
-                break;
-        }
-    }
+//    else if (indexPath.section == 1) {
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.textLabel.text = @"Modal via storyboard";
+//                break;
+//            case 1:
+//                cell.textLabel.text = @"Modal programmatically";
+//                break;
+//        }
+//    }
+//    else if (indexPath.section == 2) {
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.textLabel.text = @"Settings";
+//                break;
+//        }
+//    }
+//    else if (indexPath.section == 3) {
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.textLabel.text = @"Push view 2 levels";
+//                break;
+//        }
+//    }
     
     return cell;
 }
@@ -102,10 +102,10 @@
     switch (section) {
         case 0:
             return @"Presentation";
-        case 2:
-            return @"Demo options";
-        case 3:
-            return @"Other testing";
+//        case 2:
+//            return @"Demo options";
+//        case 3:
+//            return @"Other testing";
         default:
             return nil;
     }

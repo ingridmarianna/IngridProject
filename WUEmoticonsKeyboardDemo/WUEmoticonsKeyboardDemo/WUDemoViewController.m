@@ -12,12 +12,16 @@
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 
+#import "NSUserDefaults+DemoSettings.h"
+
 @interface WUDemoViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *resultView;
 
 
 @property (weak, nonatomic) IBOutlet UITextView *translator_view;
+
+
 
 @end
 
@@ -28,23 +32,20 @@
 {
     [super viewDidLoad];
     
-    // pre-load the text view
-    //self.textView.text = @"Bonjour!";
-    self.translator_view.text = @"こんにちはイングリッド";
-    
-    
+//    self.navigationController.navigationBar.hidden = YES;
+   
     
     // not needed in production code, but making sure the demo is clean on each run
     [FGTranslator flushCache];
     [FGTranslator flushCredentials];
     
     
-     NSURL *url = [[NSBundle mainBundle] URLForResource:@"Angel"withExtension:@"gif"];
-     FLAnimatedImage *gifimage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:url]];
-     NSLog(@"%@",gifimage);
-     FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
-     imageView.animatedImage = gifimage;
-     imageView.frame = CGRectMake(210.0, 170.0, 80.0, 120.0);
+//     NSURL *url = [[NSBundle mainBundle] URLForResource:@"Angel"withExtension:@"gif"];
+//     FLAnimatedImage *gifimage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:url]];
+//     NSLog(@"%@",gifimage);
+//     FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
+//     imageView.animatedImage = gifimage;
+//     imageView.frame = CGRectMake(210.0, 170.0, 80.0, 120.0);
      //[self.view addSubview:imageView];
     
     
@@ -111,6 +112,9 @@
         return translator;
 }
 
+
+
+
 //- (NSLocale *)currentLocale {
 //    NSLocale *locale = [NSLocale currentLocale];
 //#if TARGET_IPHONE_SIMULATOR
@@ -121,6 +125,8 @@
 //    return locale;
 //#endif
 //}
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -180,15 +186,7 @@
              [_translator_view setSelectedRange:NSMakeRange(0, _translator_view.text.length)];
              [_translator_view setText:@""];
              
-//             [self.resultView translated];
-//             
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:fromLanguage ? [NSString stringWithFormat:@"from %@", fromLanguage] : nil
-//                                                             message:translated
-//                                                            delegate:nil
-//                                                   cancelButtonTitle:@"OK"
-//                                                   otherButtonTitles:nil];
-//             [alert show];
-//
+
 //             [SVProgressHUD dismiss];
          }
      }];
@@ -241,20 +239,22 @@
      *  Do not actually do this.
      */
     
-    
     /**
      *  Show the typing indicator to be shown
      */
+    
     self.showTypingIndicator = !self.showTypingIndicator;
     
     /**
      *  Scroll to actually view the indicator
      */
+    
     [self scrollToBottomAnimated:YES];
     
     /**
      *  Copy last sent message, this will be the new "received" message
      */
+    
     JSQMessage *copyMessage = [[self.demoData.messages lastObject] copy];
     
     if (!copyMessage) {
@@ -266,6 +266,7 @@
     /**
      *  Allow typing indicator to show
      */
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         NSMutableArray *userIds = [[self.demoData.users allKeys] mutableCopy];
@@ -406,8 +407,6 @@
 {
     [self.delegateModal didDismissJSQWUDemoViewController:self];
 }
-
-
 
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -655,7 +654,6 @@
     
     return cell;
 }
-
 
 
 #pragma mark - UICollectionView Delegate

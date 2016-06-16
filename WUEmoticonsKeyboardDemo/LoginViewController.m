@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "ContactsTableViewController.h"
+#import "WelcomeViewController.h"
+#import "WUDemoViewController.h"
 
 @interface LoginViewController ()
 
@@ -22,14 +24,33 @@
 @synthesize receivedData = _receivedData;
 
             NSString* body;
-            NSString* email;
+            NSString* userEmail;
             NSString* password;
-
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [_txtUserEmail setDelegate:self];
+    [_txtUserPassword setDelegate:self];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *userEmail = [defaults objectForKey:@"userEmail"];
+    NSString *password = [defaults objectForKey:@"password"];
+    
+    [defaults synchronize];
+    
+    _txtUserEmail.text = userEmail;
+    _txtUserPassword.text = password;
+    
     // Do any additional setup after loading the view.
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,22 +59,52 @@
 }
 - (IBAction)btnLogin:(id)sender {
 
-//    NSString *email = self.txtUserEmail.text;
-//    NSString *password = self.txtUserPassword.text;
     
-    email = @"aaa";
-    password = @"aaa";
+    userEmail = self.txtUserEmail.text;
+    password = self.txtUserPassword.text;
     
-    if ([email isEqualToString:@""]||[password isEqualToString:@""]) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:userEmail forKey:@"userEmail"];
+    [defaults setObject:password forKey:@"password"];
+    
+    [defaults synchronize];
+    
+    //    userEmail = @"aaa";
+    //    password = @"aaa";
+    
+    if ([userEmail isEqualToString:@""]||[password isEqualToString:@""]) {
         NSLog(@"Please input user infomation");
-        //alert(@"Please input user infomation");
+       
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"Please input user infomation."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController * alert= [UIAlertController
+                                    alertControllerWithTitle:@"Title"
+                                    message:@"Please input user infomation."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"Yes, please"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        //Handel your yes please button action here
+                                        
+                                    }];
+        
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"No, thanks"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel no, thanks button
+                                       
+                                   }];
+        
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+
         
     } else {
  
@@ -67,8 +118,6 @@
         
         //initialize url that is going to be fetched.
         NSURL *url = [NSURL URLWithString:@"http://localhost/chat_api/login.php"];
-        //NSURL *url = [NSURL URLWithString:@"http://www.onestopfeast.com/urban_feast/Kostas_api/login_api.php"];
-        //NSURL *url = [NSURL URLWithString:@"http://localhost/Kostas_api/login_api.php"];
         
         //initialize a request from url
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
@@ -77,7 +126,7 @@
         [request setHTTPMethod:@"POST"];
         
         //initialize a post data
-         NSString *postData = [NSString stringWithFormat:@"userEmail=%@&password=%@",email,password];
+         NSString *postData = [NSString stringWithFormat:@"userEmail=%@&password=%@",userEmail,password];
         
         //set request content type we MUST set this value.
         [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -109,28 +158,52 @@
     NSLog(@"%@", error);
     NSLog(@"Connection could not be made");
     NSLog(@"%@",body);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:@"Can't connect to server!"
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
-    //        destinationController.urlnames = urlName;
-    [self.navigationController pushViewController:destinationController animated:YES];
+    UIAlertController * alert= [UIAlertController
+                                alertControllerWithTitle:@"Title"
+                                message:@"Can't connect to server!"
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Yes, please"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                
+                                {
+                                    //Handel your yes please button action here
+                                    
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   //Handel no, thanks button
+                                   
+                                   NSLog(@"%@",body);
+                                   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                   UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                   //        destinationController.urlnames = urlName;
+                                   [self.navigationController pushViewController:destinationController animated:YES];
 
+                                   
+                               }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     
     
-    if([body isEqualToString: @"success"]) {
+    if([body isEqualToString: @"Login success"]) {
         
         NSLog(@"%@",body);
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+        WUDemoViewController *destinationController = (WUDemoViewController *)[storyboard instantiateViewControllerWithIdentifier:@"wUDemoViewController"];
 //        destinationController.urlnames = urlName;
         [self.navigationController pushViewController:destinationController animated:YES];
         
@@ -138,23 +211,40 @@
         
         NSLog(@"Connection could not be made");
         NSLog(@"%@",body);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"Failed Login!"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController * alert= [UIAlertController
+                                    alertControllerWithTitle:@"Please input correct user information!"
+                                    message:@"Could you please let me try again?"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"Yes, please!"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    
+                                    {
+                                        //Handel your yes please button action here
+                                        
+                                    }];
+        
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"No, thanks!"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel no, thanks button
+                                       
+                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                    UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                        //       destinationController.urlnames = urlName;
+                                    [self.navigationController pushViewController:destinationController animated:YES];
+                                       
+                                   }];
+        
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
-//
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
