@@ -70,9 +70,6 @@
     
     [defaults synchronize];
     
-    //    userEmail = @"aaa";
-    //    password = @"aaa";
-    
     if ([userEmail isEqualToString:@""]||[password isEqualToString:@""]) {
         NSLog(@"Please input user infomation");
        
@@ -202,6 +199,7 @@
     if([body isEqualToString: @"Login success"]) {
         
         NSLog(@"%@",body);
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         WUDemoViewController *destinationController = (WUDemoViewController *)[storyboard instantiateViewControllerWithIdentifier:@"wUDemoViewController"];
 //        destinationController.urlnames = urlName;

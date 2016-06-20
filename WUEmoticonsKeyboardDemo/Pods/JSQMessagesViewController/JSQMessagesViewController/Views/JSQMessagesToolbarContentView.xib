@@ -55,7 +55,7 @@
                 <outlet property="rightHorizontalSpacingConstraint" destination="ds6-61-GNv" id="ZQh-8M-QFs"/>
                 <outlet property="textView" destination="dm4-NT-mvr" id="PFw-HO-oT8"/>
             </connections>
-            <point key="canvasLocation" x="268" y="548"/>
+            <point key="canvasLocation" x="302" y="555"/>
         </view>
     </objects>
 </document>

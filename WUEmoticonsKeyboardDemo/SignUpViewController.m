@@ -152,8 +152,7 @@ NSString *password;
         self.receivedData = data;
         
         //initialize url that is going to be fetched.
-        NSURL *url = [NSURL URLWithString:@"http://localhost/chat_api/signUp.php"];
-        
+        NSURL *url = [NSURL URLWithString:@"http://localhost/chat_api/signup1.php"];
         //initialize a request from url
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
         
@@ -162,6 +161,7 @@ NSString *password;
         [request setHTTPMethod:@"POST"];
         
         //initialize a post data
+        
         NSString *postData = [NSString stringWithFormat:@"userName=%@&userEmail=%@&phoneNumber=%@&password=%@",userName,userEmail,phoneNumber,password];
         
         //set request content type we MUST set this value.
@@ -188,7 +188,44 @@ NSString *password;
     body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"Response Body:\n%@\n", body);
     
+     if([body isEqualToString: @"Error"]) {
+    UIAlertController * alert= [UIAlertController
+                                alertControllerWithTitle:@"Title"
+                                message:@"You can't access into server!"
+                                preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Yes, please"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                
+                                {
+                                    //Handel your yes please button action here
+                                    
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   //Handel no, thanks button
+                                   
+                                NSLog(@"%@",body);
+                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                   //        destinationController.urlnames = urlName;
+                                [self.navigationController pushViewController:destinationController animated:YES];
+                                   
+                                   
+                               }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+         
+    }
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
@@ -219,11 +256,11 @@ NSString *password;
                                {
                                    //Handel no, thanks button
                                    
-                                   NSLog(@"%@",body);
-                                   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                                   UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                NSLog(@"%@",body);
+                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
                                    //        destinationController.urlnames = urlName;
-                                   [self.navigationController pushViewController:destinationController animated:YES];
+                                [self.navigationController pushViewController:destinationController animated:YES];
                                    
                                    
                                }];
@@ -237,7 +274,7 @@ NSString *password;
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     
     
-    if([body isEqualToString: @"SignUp Success"]) {
+    if([body isEqualToString: @"sign_success"]) {
         
         NSLog(@"%@",body);
         
@@ -246,13 +283,14 @@ NSString *password;
         //        destinationController.urlnames = urlName;
         [self.navigationController pushViewController:destinationController animated:YES];
         
-    } else {
         
-        NSLog(@"Connection could not be made");
+    } else if ([body isEqualToString: @"user exist"]) {
+        
+        NSLog(@"User alredy is exist");
         NSLog(@"%@",body);
         
         UIAlertController * alert= [UIAlertController
-                                    alertControllerWithTitle:@"oo"
+                                    alertControllerWithTitle:@"User is already exist"
                                     message:@"Could you please let me try again?"
                                     preferredStyle:UIAlertControllerStyleAlert];
         
@@ -263,7 +301,6 @@ NSString *password;
                                     
                                     {
                                         //Handel your yes please button action here
-                                        
                                     }];
         
         UIAlertAction* noButton = [UIAlertAction
@@ -271,12 +308,12 @@ NSString *password;
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction * action)
                                    {
-                                       //Handel no, thanks button
                                        
-                                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                                        WelcomeViewController *destinationController = (WelcomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"welcomeViewController"];
+                                       //Handel no, thanks button
+                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                    WelcomeViewController *destinationController = (WelcomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"welcomeViewController"];
                                        //       destinationController.urlnames = urlName;
-                                        [self.navigationController pushViewController:destinationController animated:YES];
+                                    [self.navigationController pushViewController:destinationController animated:YES];
                                        
                                    }];
         
@@ -284,82 +321,8 @@ NSString *password;
         [alert addAction:noButton];
         
         [self presentViewController:alert animated:YES completion:nil];
+        
     }
 }
-
-
-//        NSString *post = [NSString stringWithFormat:@"userName=%@&userEmail=%@&phoneNumber=%@&password=%@",userName,userEmail,phoneNumber,password];
-//        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-//        NSString *postLength = [NSString stringWithFormat:@"%lu" , (unsigned long)[postData length]];
-//        NSURL *url = [NSURL URLWithString:@"http://localhost/chat_api/signUp.php"];
-//        //NSURL *url = [NSURL URLWithString:@"http://urban_feast/Kostas_api/signup_api.php"];
-//
-//
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//        [request setURL:url];
-//        [request setHTTPMethod:@"POST"];
-//        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-//        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Current-Type"];
-//        [request setHTTPBody:postData];
-//        NSURLSession *session = [NSURLSession sharedSession];
-//
-//        NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-//                                                completionHandler:
-//                                      ^(NSData *data, NSURLResponse *response, NSError *error) {
-//
-//                                          if (error) {
-//                                              // Handle error...
-//
-//                                              UIAlertController* alert= [UIAlertController
-//                                                                          alertControllerWithTitle:@"Title"
-//                                                                          message:@"Conect failed!"
-//                                                                          preferredStyle:UIAlertControllerStyleAlert];
-//
-//
-//                                              UIAlertAction* yesButton = [UIAlertAction
-//                                                                          actionWithTitle:@"Yes, please"
-//                                                                          style:UIAlertActionStyleDefault
-//                                                                          handler:^(UIAlertAction * action)
-//                                                                          {
-//                                                                              //Handel your yes please button action here
-//
-//                                                                          }];
-//
-//                                              UIAlertAction* noButton = [UIAlertAction
-//                                                                         actionWithTitle:@"No, thanks"
-//                                                                         style:UIAlertActionStyleDefault
-//                                                                         handler:^(UIAlertAction * action)
-//                                                                         {
-//                                                                             //Handel no, thanks button
-//
-//                                                                         }];
-//
-//                                              [alert addAction:yesButton];
-//                                              [alert addAction:noButton];
-//
-//                                              [self presentViewController:alert animated:YES completion:nil];
-//
-//                                              return;
-//                                          }
-//
-//                                          if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-//                                              NSLog(@"Response HTTP Status code: %ld\n", (long)[(NSHTTPURLResponse *)response statusCode]);
-//                                              NSLog(@"Response HTTP Headers:\n%@\n", [(NSHTTPURLResponse *)response allHeaderFields]);
-//                                          }
-//
-//                                          NSString* body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                                          NSLog(@"Response Body:\n%@\n", body);
-//                                      }];
-//        [task resume];
-//
-////        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-////        UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
-////        //                                              destinationController.urlnames = urlName;
-////        [self.navigationController pushViewController:destinationController animated:YES];
-//
-//    }
-//  }
-
 
 @end

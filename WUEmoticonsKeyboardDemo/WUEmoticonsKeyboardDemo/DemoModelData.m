@@ -11,6 +11,25 @@
 
 @implementation DemoModelData
 
+
+NSString *userName;
+NSString *userId;
+NSString *partnerName;
+NSString *partnerId;
+
+//NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//
+//NSString *userEmail = [defaults objectForKey:@"userEmail"];
+//NSString *password = [defaults objectForKey:@"password"];
+//
+//[defaults synchronize];
+//
+//_txtUserEmail.text = userEmail;
+//_txtUserPassword.text = password;
+
+
+
+
 - (instancetype)init
 {
     self = [super init];
@@ -34,6 +53,7 @@
         
         JSQMessagesAvatarImage *wozImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_woz"]
                                                                                       diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+        
         
         self.avatars = @{ kJSQDemoAvatarIdSquires : jsqImage,
                           kJSQDemoAvatarIdCook : cookImage,

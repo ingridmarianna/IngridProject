@@ -21,11 +21,16 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *translator_view;
 
+@property (retain, nonatomic) NSURLConnection *connection;
+@property (retain, nonatomic) NSMutableData *receivedData;
 
 
 @end
 
 @implementation WUDemoViewController
+
+    @synthesize receivedData = _receivedData;
+    NSString *body;
 
 - (void)viewDidLoad
 
@@ -357,6 +362,8 @@
          *  2. Add new id<JSQMessageData> object to your data source
          *  3. Call `finishReceivingMessage`
          */
+        
+        
         [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
         [self.demoData.messages addObject:newMessage];
         [self finishReceivingMessageAnimated:YES];
@@ -424,6 +431,47 @@
      *  2. Add new id<JSQMessageData> object to your data source
      *  3. Call `finishSendingMessage`
      */
+    
+    
+//    [self.connection cancel];
+//    
+//    //initialize new mutable data
+//    
+//    NSMutableData *data = [[NSMutableData alloc] init];
+//    
+//    self.receivedData = data;
+//    
+//    //initialize url that is going to be fetched.
+//    NSURL *url = [NSURL URLWithString:@"http://localhost/chat_api/chat.php"];
+//    
+//    //initialize a request from url
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
+//    
+//    //set http method
+//    [request setHTTPMethod:@"POST"];
+//    
+//    //initialize a post data
+//    NSString *postData = [NSString stringWithFormat:@"senderId=%@&password=%@",userEmail,password];
+//    
+//    //set request content type we MUST set this value.
+//    [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+//    
+//    //set post data of request
+//    [request setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    //initialize a connection from request
+//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    NSLog(@"%@",connection);
+//    
+//    self.connection = connection;
+//    
+//    //start the connections
+//    [connection start];
+    
+//    NSLog(@"%@",senderId);
+//    NSLog(@"%@",senderDisplayName);
+//    NSLog(@"%@",text);
+    
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
     JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
@@ -437,6 +485,7 @@
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
+
 {
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
@@ -445,7 +494,6 @@
                                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:NSLocalizedString(@"Send photo", nil), NSLocalizedString(@"Send location", nil), NSLocalizedString(@"Send video", nil), NSLocalizedString(@"Send audio", nil), nil];
-    
     [sheet showFromToolbar:self.inputToolbar];
 }
 
@@ -710,6 +758,7 @@
      *
      *  Show a timestamp for every 3rd message
      */
+    
     if (indexPath.item % 3 == 0) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
@@ -784,6 +833,109 @@
         return NO;
     }
     return YES;
+}
+
+
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    
+    [self.receivedData appendData:data];
+    body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Response Body:\n%@\n", body);
+}
+
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    
+    NSLog(@"%@", error);
+    NSLog(@"Connection could not be made");
+    NSLog(@"%@",body);
+    
+    UIAlertController * alert= [UIAlertController
+                                alertControllerWithTitle:@"Title"
+                                message:@"Can't connect to server!"
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Yes, please"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                
+                                {
+                                    //Handel your yes please button action here
+                                    
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   //Handel no, thanks button
+                                   
+                                   NSLog(@"%@",body);
+                                   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                   UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                   //        destinationController.urlnames = urlName;
+                                   [self.navigationController pushViewController:destinationController animated:YES];
+                                   
+                                   
+                               }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    
+    
+    if([body isEqualToString: @"Login success"]) {
+        
+        NSLog(@"%@",body);
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        WUDemoViewController *destinationController = (WUDemoViewController *)[storyboard instantiateViewControllerWithIdentifier:@"wUDemoViewController"];
+        //        destinationController.urlnames = urlName;
+        [self.navigationController pushViewController:destinationController animated:YES];
+        
+    } else {
+        
+        NSLog(@"Connection could not be made");
+        NSLog(@"%@",body);
+        UIAlertController * alert= [UIAlertController
+                                    alertControllerWithTitle:@"Please input correct user information!"
+                                    message:@"Could you please let me try again?"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"Yes, please!"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    
+                                    {
+                                        //Handel your yes please button action here
+                                        
+                                    }];
+        
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"No, thanks!"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel no, thanks button
+                                       
+                                       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                                       UITabBarController *destinationController = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+                                       //       destinationController.urlnames = urlName;
+                                       [self.navigationController pushViewController:destinationController animated:YES];
+                                       
+                                   }];
+        
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+
 }
 
 @end
